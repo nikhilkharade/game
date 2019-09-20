@@ -1,5 +1,6 @@
 import pygame
 import random
+#this is so that we can use the arrow keys to control our jet
 from pygame.locals import (
     RLEACCEL,
     K_UP,
@@ -10,8 +11,10 @@ from pygame.locals import (
     KEYDOWN,
     QUIT,
 )
+#setting the screen resolution
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
+#player class created 
 class Player(pygame.sprite.Sprite):
     def __init__(self):
         super(Player, self).__init__()
@@ -73,10 +76,12 @@ class Cloud(pygame.sprite.Sprite):
         self.rect.move_ip(-5, 0)
         if self.rect.right < 0:
             self.kill()
+#initialize mixer for audio files and pygame for the game
 pygame.mixer.init()
 pygame.init()
 clock = pygame.time.Clock()
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+#adding missiles
 ADDENEMY = pygame.USEREVENT + 1
 pygame.time.set_timer(ADDENEMY, 250)
 ADDCLOUD = pygame.USEREVENT + 2
@@ -86,8 +91,10 @@ enemies = pygame.sprite.Group()
 clouds = pygame.sprite.Group()
 all_sprites = pygame.sprite.Group()
 all_sprites.add(player)
+#loading the background music.
 pygame.mixer.music.load("Apoxode_-_Electric_1.mp3")
 pygame.mixer.music.play(loops=-1)
+#loading the assignment keys to each arrow key.
 move_up_sound = pygame.mixer.Sound("Rising_putter.ogg")
 move_down_sound = pygame.mixer.Sound("Falling_putter.ogg")
 collision_sound = pygame.mixer.Sound("Collision.ogg")
@@ -95,6 +102,7 @@ move_up_sound.set_volume(0.1)
 move_down_sound.set_volume(0.1)
 collision_sound.set_volume(0.1)
 running = True
+#this is the main loop
 while running:
     for event in pygame.event.get():
         if event.type == KEYDOWN:
@@ -124,6 +132,7 @@ while running:
         collision_sound.play()
         running = False
     pygame.display.flip()
+    #for setting a steady 60fps would advise to set 30 if you face issues .
     clock.tick(60)
 pygame.mixer.music.stop()
 pygame.mixer.quit()
